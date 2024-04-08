@@ -3,10 +3,7 @@ package edu.hitsz.application;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
-import edu.hitsz.prop.AddhpProp;
-import edu.hitsz.prop.BaseProp;
-import edu.hitsz.prop.BombProp;
-import edu.hitsz.prop.FireProp;
+import edu.hitsz.prop.*;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
 import javax.swing.*;
@@ -36,7 +33,7 @@ public class Game extends JPanel {
     private int timeInterval = 40;
 
     private final HeroAircraft heroAircraft;
-    private final List<AbstractAircraft> enemyAircrafts;
+    private final List<EnemyAircraft> enemyAircrafts;
     private final List<BaseBullet> heroBullets;
     private final List<BaseBullet> enemyBullets;
 
@@ -68,12 +65,12 @@ public class Game extends JPanel {
      */
     private boolean gameOverFlag = false;
 
-    public Game() {
-        heroAircraft = new HeroAircraft(
-                Main.WINDOW_WIDTH / 2,
-                Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight() ,
-                0, 0, 1000);
+    EnemyFactory enemyFactory;
 
+
+    public Game() {
+
+        heroAircraft = HeroAircraft.getHeroAircraft();
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<>();
         enemyBullets = new LinkedList<>();
@@ -109,24 +106,14 @@ public class Game extends JPanel {
                 // 新敌机产生
                 if(((int)(Math.random()*10))<3){
                     if (enemyAircrafts.size() < enemyMaxNumber) {
-                        enemyAircrafts.add(new EliteAircraft(
-                                (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
-                                (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
-                                1,
-                                5,
-                                150
-                        ));
+                        enemyFactory = new EliteEnemyFactory();
+                        enemyAircrafts.add(enemyFactory.createEnemy());
                     }
                 }
                 else{
                     if (enemyAircrafts.size() < enemyMaxNumber) {
-                        enemyAircrafts.add(new MobEnemy(
-                                (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
-                                (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
-                                0,
-                                4,
-                                50
-                        ));
+                        enemyFactory = new MobEnemyFactory();
+                        enemyAircrafts.add(enemyFactory.createEnemy());
                     }
                 }
 
@@ -187,7 +174,7 @@ public class Game extends JPanel {
 
     private void shootAction() {
         // TODO 敌机射击
-        for(AbstractAircraft enemyAircraft : enemyAircrafts) {
+        for(EnemyAircraft enemyAircraft : enemyAircrafts) {
             enemyBullets.addAll(enemyAircraft.shoot());
         }
         // 英雄射击
@@ -204,7 +191,7 @@ public class Game extends JPanel {
     }
 
     private void aircraftsMoveAction() {
-        for (AbstractAircraft enemyAircraft : enemyAircrafts) {
+        for (EnemyAircraft enemyAircraft : enemyAircrafts) {
             enemyAircraft.forward();
         }
     }
@@ -236,7 +223,7 @@ public class Game extends JPanel {
             if (bullet.notValid()) {
                 continue;
             }
-            for (AbstractAircraft enemyAircraft : enemyAircrafts) {
+            for (EnemyAircraft enemyAircraft : enemyAircrafts) {
                 if (enemyAircraft.notValid()) {
                     // 已被其他子弹击毁的敌机，不再检测
                     // 避免多个子弹重复击毁同一敌机的判定
@@ -249,32 +236,11 @@ public class Game extends JPanel {
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
                         // TODO 获得分数，产生道具补给
-                        if(enemyAircraft instanceof EliteAircraft){
-                            if(((int)(Math.random()*100))%5==0){
-                                props.add(new AddhpProp(
-                                        enemyAircraft.getLocationX(),
-                                        enemyAircraft.getLocationY(),
-                                        0,
-                                        4
-                                ));
+                        if(enemyAircraft instanceof EliteEnemy){
+                            List<BaseProp> dropped = ((EliteEnemy) enemyAircraft).dropProp();
+                            if(!dropped.isEmpty()){
+                                props.addAll(dropped);
                             }
-                            else if(((int)(Math.random()*100))%5==1){
-                                props.add(new BombProp(
-                                        enemyAircraft.getLocationX(),
-                                        enemyAircraft.getLocationY(),
-                                        0,
-                                        4
-                                ));
-                            }
-                            else if(((int)(Math.random()*100))%5==2) {
-                                props.add(new FireProp(
-                                        enemyAircraft.getLocationX(),
-                                        enemyAircraft.getLocationY(),
-                                        0,
-                                        4
-                                ));
-                            }
-
                             score += 20;
                         }
                         else{
@@ -305,6 +271,7 @@ public class Game extends JPanel {
      * 后处理：
      * 1. 删除无效的子弹
      * 2. 删除无效的敌机
+     * 3. 删除无效的道具
      * <p>
      * 无效的原因可能是撞击或者飞出边界
      */
@@ -369,7 +336,7 @@ public class Game extends JPanel {
     private void paintScoreAndLife(Graphics g) {
         int x = 10;
         int y = 25;
-        g.setColor(new Color(16711680));
+        g.setColor(new Color(0xFF0000));
         g.setFont(new Font("SansSerif", Font.BOLD, 22));
         g.drawString("SCORE:" + this.score, x, y);
         y = y + 20;

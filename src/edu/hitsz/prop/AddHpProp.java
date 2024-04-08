@@ -2,9 +2,9 @@ package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.HeroAircraft;
 
-public class AddhpProp extends BaseProp{
+public class AddHpProp extends BaseProp{
     private int increase = 300;
-    public AddhpProp (int locationX, int locationY, int speedX, int speedY){
+    public AddHpProp(int locationX, int locationY, int speedX, int speedY){
         super(locationX, locationY, speedX, speedY);
     }
     @Override

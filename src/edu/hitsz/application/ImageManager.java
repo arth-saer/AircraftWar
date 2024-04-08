@@ -1,12 +1,12 @@
 package edu.hitsz.application;
 
 
-import edu.hitsz.aircraft.EliteAircraft;
+import edu.hitsz.aircraft.EliteEnemy;
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.aircraft.MobEnemy;
 import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.bullet.HeroBullet;
-import edu.hitsz.prop.AddhpProp;
+import edu.hitsz.prop.AddHpProp;
 import edu.hitsz.prop.BombProp;
 import edu.hitsz.prop.FireProp;
 
@@ -57,10 +57,10 @@ public class ImageManager {
 
             CLASSNAME_IMAGE_MAP.put(HeroAircraft.class.getName(), HERO_IMAGE);
             CLASSNAME_IMAGE_MAP.put(MobEnemy.class.getName(), MOB_ENEMY_IMAGE);
-            CLASSNAME_IMAGE_MAP.put(EliteAircraft.class.getName(), ELITE_ENEMY_IMAGE);
+            CLASSNAME_IMAGE_MAP.put(EliteEnemy.class.getName(), ELITE_ENEMY_IMAGE);
             CLASSNAME_IMAGE_MAP.put(HeroBullet.class.getName(), HERO_BULLET_IMAGE);
             CLASSNAME_IMAGE_MAP.put(EnemyBullet.class.getName(), ENEMY_BULLET_IMAGE);
-            CLASSNAME_IMAGE_MAP.put(AddhpProp.class.getName(), ADD_HP_PROP);
+            CLASSNAME_IMAGE_MAP.put(AddHpProp.class.getName(), ADD_HP_PROP);
             CLASSNAME_IMAGE_MAP.put(BombProp.class.getName(), BOMB_PROP);
             CLASSNAME_IMAGE_MAP.put(FireProp.class.getName(), FIRE_PROP);
 

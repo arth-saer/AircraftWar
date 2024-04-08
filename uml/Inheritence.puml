@@ -40,30 +40,59 @@ class HeroAircraft {
     - shootNum:int
     - power:int
     - direction:int
+    - {static} heroAircraft:HeroAircraft
+    + {static} getHeroAircraft():HeroAircraft
     + HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward():void
     + increaseHp(int increase):void
     + shoot():List<BaseBullet>
 }
-
+HeroAircraft --> HeroAircraft
 AbstractAircraft <|-- HeroAircraft
+
+class EnemyAircraft{
+    + EnemyAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+}
+AbstractAircraft <|-- EnemyAircraft
 
 class MobEnemy {
     + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward():void
     + shoot():List<BaseBullet>
 }
-AbstractAircraft <|-- MobEnemy
+EnemyAircraft <|-- MobEnemy
 
-class EliteAircraft {
+class EliteEnemy {
     - shootNum:int
     - power:int
     - direction:int
-    + EliteAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    - propFactory:PropFactory
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward():void
     + shoot():List<BaseBullet>
+    + dropProp():List<BaseProp>
 }
-AbstractAircraft <|-- EliteAircraft
+EliteEnemy --> PropFactory
+EnemyAircraft <|-- EliteEnemy
+
+interface EnemyFactory
+{
+    + {abstract} createEnemy():EnemyAircraft
+}
+
+class MobEnemyFactory
+{
+    + createEnemy():EnemyAircraft
+}
+EnemyFactory <|.. EliteEnemyFactory
+EnemyFactory <|.. MobEnemyFactory
+
+class EliteEnemyFactory
+{
+    + createEnemy():EnemyAircraft
+}
+
+EnemyFactory ..> EnemyAircraft
 
 abstract class BaseBullet
 {
@@ -92,9 +121,11 @@ abstract class BaseProp{
     + {abstract} Effect(HeroAircraft heroAircraft):void
 }
 
-class AddhpProp{
+BaseProp ..> HeroAircraft
+
+class AddHpProp{
     - increase:int
-    + AddhpProp(int locationX, int locationY, int speedX, int speedY)
+    + AddHpProp(int locationX, int locationY, int speedX, int speedY)
     + Effect(HeroAircraft heroAircraft):void
 }
 
@@ -108,9 +139,33 @@ class FireProp{
     + Effect(HeroAircraft heroAircraft):void
 }
 
-BaseProp <|-- AddhpProp
+BaseProp <|-- AddHpProp
 BaseProp <|-- BombProp
 BaseProp <|-- FireProp
+
+interface PropFactory
+{
+    + {abstract} createProp():BaseProp
+}
+
+class AddHpPropFactory
+{
+    + createProp():BaseProp
+}
+class BombPropFactory
+{
+    + createProp():BaseProp
+}
+class FirePropFactory
+{
+    + createProp():BaseProp
+}
+
+PropFactory <|.. AddHpPropFactory
+PropFactory <|.. BombPropFactory
+PropFactory <|.. FirePropFactory
+
+PropFactory ..> BaseProp
 
 AbstractFlyingObject <|-- AbstractAircraft
 AbstractFlyingObject <|-- BaseBullet
