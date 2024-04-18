@@ -1,7 +1,7 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.bullet.EliteBullet;
+import edu.hitsz.bullet.BossBullet;
 import edu.hitsz.prop.*;
 import edu.hitsz.propfactory.AddHpPropFactory;
 import edu.hitsz.propfactory.BombPropFactory;
@@ -11,12 +11,11 @@ import edu.hitsz.propfactory.PropFactory;
 import java.util.LinkedList;
 import java.util.List;
 
+public class BossEnemy extends EnemyAircraft{
 
-public class EliteEnemy extends EnemyAircraft {
+    private int shootNum = 20;
 
-    private int shootNum = 1;
-
-    private int power = 30;
+    private int power = 75;
 
 
     private int direction = 1;
@@ -30,47 +29,55 @@ public class EliteEnemy extends EnemyAircraft {
      * @param speedY 英雄机射出的子弹的基准速度（英雄机无特定速度）
      * @param hp    初始生命值
      */
-    public EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
+    public BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
     }
 
     @Override
     public int getSCORE() {
-        return 20;
+        return 200;
     }
     @Override
     public List<BaseProp> dropProp(){
-        int i = (int)(Math.random()*100);
+        int i, j;
         List<BaseProp> res = new LinkedList<>();
 
         PropFactory propFactory;
+        for(j = -1; j < 2; j++)
+        {
+            i = (int)(Math.random()*100);
+            if(i%5==0){
+                propFactory = new AddHpPropFactory();
+                res.add(propFactory.createProp(this.getLocationX() + 40 * j,this.getLocationY(),0,3));
+            }
+            else if(i%5==1){
+                propFactory = new BombPropFactory();
+                res.add(propFactory.createProp(this.getLocationX() + 40 * j,this.getLocationY(),0,3));
+            }
+            else if(i%5==2) {
+                propFactory = new FirePropFactory();
+                res.add(propFactory.createProp(this.getLocationX() + 40 * j,this.getLocationY(),0,3));
+            }
+        }
 
-        if(i%7==0){
-            propFactory = new AddHpPropFactory();
-            res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
-        }
-        else if(i%7==1){
-            propFactory = new BombPropFactory();
-            res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
-        }
-        else if(i%7==2) {
-            propFactory = new FirePropFactory();
-            res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
-        }
         return res;
     }
     @Override
     public List<BaseBullet> shoot() {
         List<BaseBullet> res = new LinkedList<>();
         int x = this.getLocationX();
-        int y = this.getLocationY() + direction*2;
-        int speedX = this.getSpeedX();
-        int speedY = this.getSpeedY() + direction*4;
+        int y = this.getLocationY();
         BaseBullet bullet;
-        for(int i=0; i<shootNum; i++){
+        int i;
+        for(i=0; i<shootNum; i++){
             // 子弹发射位置相对飞机位置向前偏移
             // 多个子弹横向分散
-            bullet = new EliteBullet(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
+            bullet = new BossBullet(
+                    (int)(x + 50 * Math.cos(i*Math.PI/10)),
+                    (int)(y + 50 * Math.sin(i*Math.PI/10)),
+                    8,
+                    i,
+                    power);
             res.add(bullet);
         }
         return res;

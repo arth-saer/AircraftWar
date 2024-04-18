@@ -2,9 +2,8 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
-import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.bullet.HeroBullet;
-import edu.hitsz.application.Main;
+import edu.hitsz.bullet.*;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,12 +13,14 @@ import java.util.List;
  */
 public class HeroAircraft extends AbstractAircraft {
 
-    /**攻击方式 */
+    /**
+     * 攻击方式
+     */
 
     /**
      * 子弹一次发射数量
      */
-    private int shootNum = 1;
+    private int shootNum = 6;
 
     /**
      * 子弹伤害
@@ -44,7 +45,7 @@ public class HeroAircraft extends AbstractAircraft {
     private static HeroAircraft heroAircraft = new HeroAircraft(
             Main.WINDOW_WIDTH / 2,
             Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight() ,
-            0, 0, 1000
+            0, 0, 50000000
             );
     public static HeroAircraft getHeroAircraft(){
         return heroAircraft;
@@ -56,7 +57,7 @@ public class HeroAircraft extends AbstractAircraft {
     public void increaseHp(int increase) {
         hp = Math.min(hp + increase, maxHp);
     }
-/*
+    /*
     public int getShootNum(){
         return shootNum;
     }
@@ -64,7 +65,7 @@ public class HeroAircraft extends AbstractAircraft {
     public void setShootNum(int shootNum) {
         this.shootNum = shootNum;
     }
-*/
+    */
     @Override
     /**
      * 通过射击产生子弹
@@ -75,14 +76,30 @@ public class HeroAircraft extends AbstractAircraft {
         int x = this.getLocationX();
         int y = this.getLocationY() + direction*2;
         int speedX = 0;
-        int speedY = this.getSpeedY() + direction*6;
+        int speedY = this.getSpeedY() + direction*8;
         BaseBullet bullet;
-        for(int i=0; i<shootNum; i++){
-            // 子弹发射位置相对飞机位置向前偏移
-            // 多个子弹横向分散
-            bullet = new HeroBullet(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
-            res.add(bullet);
+        int j = (int)(Math.random() * 10);
+        if(j % 3 == 0){
+            for(int i=0; i<shootNum; i++){
+                // 子弹发射位置相对飞机位置向前偏移
+                // 多个子弹横向分散
+                bullet = new HeroBullet1(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
+                res.add(bullet);
+            }
         }
+        else if (j % 3 == 1){
+            for(int i=0; i<shootNum; i++){
+                bullet = new HeroBullet2(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
+                res.add(bullet);
+            }
+        }
+        else{
+            for(int i=0; i<shootNum; i++){
+                bullet = new HeroBullet3(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
+                res.add(bullet);
+            }
+        }
+
         return res;
     }
 

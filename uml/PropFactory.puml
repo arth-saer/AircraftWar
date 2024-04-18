@@ -1,0 +1,57 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class BaseProp{
+    + BaseProp(int locationX, int locationY, int speedX, int speedY)
+    + {abstract} Effect(HeroAircraft heroAircraft):void
+}
+
+
+class AddHpProp{
+    - increase:int
+    + AddHpProp(int locationX, int locationY, int speedX, int speedY)
+    + Effect(HeroAircraft heroAircraft):void
+}
+
+class BombProp{
+    + BombProp(int locationX, int locationY, int speedX, int speedY)
+    + Effect(HeroAircraft heroAircraft):void
+}
+
+class FireProp{
+    + FireProp(int locationX, int locationY, int speedX, int speedY)
+    + Effect(HeroAircraft heroAircraft):void
+}
+
+BaseProp <|-- AddHpProp
+BaseProp <|-- BombProp
+BaseProp <|-- FireProp
+
+interface PropFactory
+{
+    + {abstract} createProp():BaseProp
+}
+
+class AddHpPropFactory
+{
+    + createProp():BaseProp
+}
+class BombPropFactory
+{
+    + createProp():BaseProp
+}
+class FirePropFactory
+{
+    + createProp():BaseProp
+}
+
+PropFactory <|.. AddHpPropFactory
+PropFactory <|.. BombPropFactory
+PropFactory <|.. FirePropFactory
+
+PropFactory ..> BaseProp
+
+'AddHpPropFactory ..> AddHpProp
+'BombPropFactory ..> BombProp
+'FirePropFactory ..> FireProp
+@enduml
