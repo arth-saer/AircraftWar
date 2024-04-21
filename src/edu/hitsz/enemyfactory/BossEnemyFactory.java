@@ -13,6 +13,6 @@ public class BossEnemyFactory implements EnemyFactory {
                 (int) (Main.WINDOW_HEIGHT * 0.15),
                 2,
                 0,
-                3000);
+                600);
     }
 }

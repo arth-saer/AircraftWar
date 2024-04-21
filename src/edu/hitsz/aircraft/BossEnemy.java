@@ -69,17 +69,34 @@ public class BossEnemy extends EnemyAircraft{
         int y = this.getLocationY();
         BaseBullet bullet;
         int i;
+        
+        //实现方式一,forward函数不变
         for(i=0; i<shootNum; i++){
             // 子弹发射位置相对飞机位置向前偏移
             // 多个子弹横向分散
             bullet = new BossBullet(
-                    (int)(x + 50 * Math.cos(i*Math.PI/10)),
-                    (int)(y + 50 * Math.sin(i*Math.PI/10)),
-                    8,
-                    i,
+                    (int)(x + 50 * Math.cos(i * 2 * Math.PI / shootNum)),
+                    (int)(y + 50 * Math.sin(i * 2 * Math.PI / shootNum)),
+                    (int)(5 * Math.cos(i * 2 * Math.PI / shootNum)),
+                    (int)(5 * Math.sin(i * 2 * Math.PI / shootNum)),
                     power);
             res.add(bullet);
         }
+        /*
+        for(i=0; i<shootNum; i++){
+            // 子弹发射位置相对飞机位置向前偏移
+            // 多个子弹横向分散
+            bullet = new BossBullet(
+                    (int)(x + 50 * Math.cos(i * 2 * Math.PI / shootNum)),
+                    (int)(y + 50 * Math.sin(i * 2 * Math.PI / shootNum)),
+                    6,
+                    i,
+                    power,
+                    2,
+                    shootNum);
+            res.add(bullet);
+        }
+        */
         return res;
     }
 

@@ -25,9 +25,9 @@ class HeroAircraftTest {
 
     @Test
     void decreaseHp() {
-        int decrease = 100;
+        int decrease = 10000;
         heroAircraft.decreaseHp(decrease);
-        assertEquals(4900, heroAircraft.getHp());
+        assertEquals(49990000, heroAircraft.getHp());
     }
 
     //英雄战机大小为100 * 83，所处位置为[256 , 685]

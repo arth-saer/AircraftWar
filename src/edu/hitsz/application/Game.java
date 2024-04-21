@@ -127,7 +127,7 @@ public class Game extends JPanel {
                         enemyAircrafts.add(enemyFactory.createEnemy());
                     }
                 }
-                if(score >= 1000 * (bossCounter + 1)){
+                if(score >= 800 * (bossCounter + 1)){
                     bossCounter++;
                     enemyFactory = new BossEnemyFactory();
                     enemyAircrafts.add(enemyFactory.createEnemy());
