@@ -3,6 +3,8 @@ package edu.hitsz.application;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
+import edu.hitsz.dao.ScoreDaoImp;
+import edu.hitsz.dao.ScoreData;
 import edu.hitsz.enemyfactory.*;
 import edu.hitsz.prop.*;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
@@ -10,6 +12,9 @@ import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.*;
@@ -161,6 +166,31 @@ public class Game extends JPanel {
                 // 游戏结束
                 executorService.shutdown();
                 gameOverFlag = true;
+
+
+
+
+                ScoreDaoImp scoreDaoImp = new ScoreDaoImp("data/scoredata.ser");
+                //scoreDaoImp.getScoresFromFile();
+
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("想要存储这次的成绩吗(Y or N)");
+                char storeIf = scanner.next().charAt(0);
+                if(storeIf == 'Y'){
+                    System.out.println("那么请你输入你的名字,是字母、数字和_的组合哦,最长不超过10位");
+                    String name = scanner.next();
+
+                    LocalDateTime currentDateTime = LocalDateTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd HH:mm");
+                    String formattedDateTime = currentDateTime.format(formatter);
+                    scoreDaoImp.doAdd(new ScoreData(score, name, formattedDateTime));
+                }
+                //coreDaoImp.doDelete(new ScoreData(1500, "lixiaowei", "04-26 15:09"));
+
+                scoreDaoImp.sortByScore();
+                scoreDaoImp.printScoreDatas();
+
+                scanner.close();
                 System.out.println("Game Over!");
             }
 
@@ -189,7 +219,7 @@ public class Game extends JPanel {
         }
     }
 
-    private void shootAction() {
+    private void shootAction(){
         // TODO 敌机射击
         for(EnemyAircraft enemyAircraft : enemyAircrafts) {
             enemyBullets.addAll(enemyAircraft.shoot());

@@ -1,6 +1,7 @@
 package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.trajectory.FanShape;
 
 public class FireProp extends BaseProp{
     public FireProp(int locationX, int locationY, int speedX, int speedY){
@@ -9,7 +10,11 @@ public class FireProp extends BaseProp{
     @Override
     public void Effect(HeroAircraft heroAircraft){
 
+        heroAircraft.setShootNum(3);
+        heroAircraft.setPower(75);
+
+        heroAircraft.setTrajectory(new FanShape());
         System.out.println("FireSupply active!");
-        //heroAircraft.setShootNum(heroAircraft.getShootNum()+2);
+
     }
 }

@@ -1,0 +1,36 @@
+@startuml
+
+
+interface Trajectory{
+    + {abstract} createBullets(AbstractAircraft abstractAircraft, Class<? extends BaseBullet> bulletClass):List<BaseBullet>
+}
+
+class NoShoot{
+    + createBullets(AbstractAircraft abstractAircraft, Class<? extends BaseBullet> bulletClass):List<BaseBullet>
+}
+
+class Linear{
+    + createBullets(AbstractAircraft abstractAircraft, Class<? extends BaseBullet> bulletClass):List<BaseBullet>
+}
+
+class FanShape{
+    + createBullets(AbstractAircraft abstractAircraft, Class<? extends BaseBullet> bulletClass):List<BaseBullet>
+}
+
+class Annular{
+    + createBullets(AbstractAircraft abstractAircraft, Class<? extends BaseBullet> bulletClass):List<BaseBullet>
+}
+
+NoShoot .left.|> Trajectory
+Linear ..|> Trajectory
+FanShape .up.|> Trajectory
+Annular ..|> Trajectory
+
+abstract class AbstractAircraft{
+    # trajectory:Trajectory
+    + setTrajectory():void
+    + getBullets(AbstractAircraft abstractAircraft, Class<? extends BaseBullet> bulletClass):List<BaseBullet>
+}
+
+AbstractAircraft o-> Trajectory
+@enduml

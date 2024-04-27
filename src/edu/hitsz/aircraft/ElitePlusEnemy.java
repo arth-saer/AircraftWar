@@ -1,23 +1,16 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.bullet.ElitePlusBullet;
+import edu.hitsz.bullet.EliteBullet;
 import edu.hitsz.prop.*;
-import edu.hitsz.propfactory.AddHpPropFactory;
-import edu.hitsz.propfactory.BombPropFactory;
-import edu.hitsz.propfactory.FirePropFactory;
-import edu.hitsz.propfactory.PropFactory;
+import edu.hitsz.propfactory.*;
+import edu.hitsz.trajectory.FanShape;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class ElitePlusEnemy extends EnemyAircraft{
-    private int shootNum = 3;
 
-    private int power = 50;
-
-
-    private int direction = 1;
 
     /**
      * @param locationX 英雄机位置x坐标
@@ -28,7 +21,11 @@ public class ElitePlusEnemy extends EnemyAircraft{
      */
     public ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
+        this.shootNum = 3;
+        this.power = 50;
+        this.trajectory = new FanShape();
     }
+
     @Override
     public int getSCORE(){
         return 30;
@@ -40,31 +37,26 @@ public class ElitePlusEnemy extends EnemyAircraft{
 
         PropFactory propFactory;
 
-        if(i%6==0){
+        if(i%8==0){
             propFactory = new AddHpPropFactory();
             res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
         }
-        else if(i%6==1){
+        else if(i%8==1){
             propFactory = new BombPropFactory();
             res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
         }
-        else if(i%6==2) {
+        else if(i%8==2) {
             propFactory = new FirePropFactory();
+            res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
+        }
+        else if(i%8==3) {
+            propFactory = new FirePlusPropFactory();
             res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
         }
         return res;
     }
     @Override
     public List<BaseBullet> shoot() {
-        List<BaseBullet> res = new LinkedList<>();
-        int x = this.getLocationX();
-        int y = this.getLocationY() + direction*2;
-        int speedY = this.getSpeedY() + direction*2;
-        BaseBullet bullet;
-        for(int i=0; i<shootNum; i++){
-            bullet = new ElitePlusBullet(x + 10 * (i - 1), y, 2 * i - 1, speedY, power);
-            res.add(bullet);
-        }
-        return res;
+        return this.getBullets(this, EliteBullet.class);
     }
 }

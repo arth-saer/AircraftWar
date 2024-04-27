@@ -3,10 +3,8 @@ package edu.hitsz.aircraft;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EliteBullet;
 import edu.hitsz.prop.*;
-import edu.hitsz.propfactory.AddHpPropFactory;
-import edu.hitsz.propfactory.BombPropFactory;
-import edu.hitsz.propfactory.FirePropFactory;
-import edu.hitsz.propfactory.PropFactory;
+import edu.hitsz.propfactory.*;
+import edu.hitsz.trajectory.Linear;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,12 +12,8 @@ import java.util.List;
 
 public class EliteEnemy extends EnemyAircraft {
 
-    private int shootNum = 1;
-
-    private int power = 30;
 
 
-    private int direction = 1;
 
 
 
@@ -32,8 +26,10 @@ public class EliteEnemy extends EnemyAircraft {
      */
     public EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
+        this.shootNum = 1;
+        this.power = 30;
+        this.trajectory = new Linear();
     }
-
     @Override
     public int getSCORE() {
         return 20;
@@ -45,35 +41,27 @@ public class EliteEnemy extends EnemyAircraft {
 
         PropFactory propFactory;
 
-        if(i%7==0){
+        if(i%9==0){
             propFactory = new AddHpPropFactory();
             res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
         }
-        else if(i%7==1){
+        else if(i%9==1){
             propFactory = new BombPropFactory();
             res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
         }
-        else if(i%7==2) {
+        else if(i%9==2) {
             propFactory = new FirePropFactory();
+            res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
+        }
+        else if(i%9==3) {
+            propFactory = new FirePlusPropFactory();
             res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
         }
         return res;
     }
     @Override
     public List<BaseBullet> shoot() {
-        List<BaseBullet> res = new LinkedList<>();
-        int x = this.getLocationX();
-        int y = this.getLocationY() + direction*2;
-        int speedX = this.getSpeedX();
-        int speedY = this.getSpeedY() + direction*4;
-        BaseBullet bullet;
-        for(int i=0; i<shootNum; i++){
-            // 子弹发射位置相对飞机位置向前偏移
-            // 多个子弹横向分散
-            bullet = new EliteBullet(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
-            res.add(bullet);
-        }
-        return res;
+        return this.getBullets(this, EliteBullet.class);
     }
 
 }

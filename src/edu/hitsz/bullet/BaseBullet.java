@@ -9,18 +9,35 @@ import edu.hitsz.basic.AbstractFlyingObject;
  *
  * @author hitsz
  */
-public abstract class BaseBullet extends AbstractFlyingObject {
+public class BaseBullet extends AbstractFlyingObject {
 
     private int power = 10;
+    private int speed;
+    private double angle;
 
     public BaseBullet(int locationX, int locationY, int speedX, int speedY, int power) {
         super(locationX, locationY, speedX, speedY);
         this.power = power;
     }
 
+    public BaseBullet(int locationX, int locationY, int speedX, int speedY, int power, int speed, double angle) {
+        super(locationX, locationY, speedX, speedY);
+        this.power = power;
+        this.speed = speed;
+        this.angle = angle;
+    }
+
     @Override
     public void forward() {
-        super.forward();
+        if((speedX != 0) || (speedY != 0))
+        {
+            locationX += speedX;
+            locationY += speedY;
+        }
+        else{
+            locationX += (int)(speed * Math.cos(angle));
+            locationY += (int)(speed * Math.sin(angle));
+        }
 
         // 判定 x 轴出界
         if (locationX <= 0 || locationX >= Main.WINDOW_WIDTH) {

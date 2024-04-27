@@ -2,7 +2,9 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.prop.BaseProp;
+import edu.hitsz.trajectory.NoShoot;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,10 +17,13 @@ import java.util.List;
  */
 public class MobEnemy extends EnemyAircraft {
 
+
     public MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
+        this.shootNum = 0;
+        this.power = 0;
+        this.trajectory = new NoShoot();
     }
-
 
     @Override
     public int getSCORE(){
@@ -26,12 +31,11 @@ public class MobEnemy extends EnemyAircraft {
     }
     @Override
     public List<BaseProp> dropProp(){
-        List<BaseProp> res = new LinkedList<>();
-        return res;
+        return new LinkedList<>();
     }
     @Override
     public List<BaseBullet> shoot() {
-        return new LinkedList<>();
+        return this.getBullets(this, EnemyBullet.class);
     }
 
 }

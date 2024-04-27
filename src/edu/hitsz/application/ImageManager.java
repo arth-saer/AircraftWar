@@ -5,6 +5,7 @@ import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.*;
 import edu.hitsz.prop.AddHpProp;
 import edu.hitsz.prop.BombProp;
+import edu.hitsz.prop.FirePlusProp;
 import edu.hitsz.prop.FireProp;
 
 import javax.imageio.ImageIO;
@@ -43,6 +44,7 @@ public class ImageManager {
     public static BufferedImage ADD_HP_PROP;
     public static BufferedImage BOMB_PROP;
     public static BufferedImage FIRE_PROP;
+    public static BufferedImage FIRE_PLUS_PROP;
 
     static {
         try {
@@ -67,6 +69,7 @@ public class ImageManager {
             ADD_HP_PROP = ImageIO.read(new FileInputStream("src/images/prop_blood.png"));
             BOMB_PROP = ImageIO.read(new FileInputStream("src/images/prop_bomb.png"));
             FIRE_PROP = ImageIO.read(new FileInputStream("src/images/prop_bullet.png"));
+            FIRE_PLUS_PROP = ImageIO.read(new FileInputStream("src/images/prop_bulletPlus.png"));
 
 
             CLASSNAME_IMAGE_MAP.put(HeroAircraft.class.getName(), HERO_IMAGE);
@@ -87,6 +90,7 @@ public class ImageManager {
             CLASSNAME_IMAGE_MAP.put(AddHpProp.class.getName(), ADD_HP_PROP);
             CLASSNAME_IMAGE_MAP.put(BombProp.class.getName(), BOMB_PROP);
             CLASSNAME_IMAGE_MAP.put(FireProp.class.getName(), FIRE_PROP);
+            CLASSNAME_IMAGE_MAP.put(FirePlusProp.class.getName(), FIRE_PLUS_PROP);
 
 
         } catch (IOException e) {
