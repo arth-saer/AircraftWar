@@ -1,0 +1,200 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class AbstractFlyingObject
+{
+    # locationX:int
+    # locationY:int
+    # speedX:int
+    # speedY:int
+    # image:BufferedImage
+    # width:int
+    # height:int
+    # isValid:boolean
+
+    + AbstractFlyingObject()
+    + AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY)
+    + forward():void
+    + crash(AbstractFlyingObject flyingObject):boolean
+    + setLocation(double locationX, double locationY):void
+    + getLocationX():int
+    + getLocationY():int
+    + getSpeedX():int
+    + getSpeedY():int
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
+}
+abstract class BaseProp{
+    + {static} voiceSwitch:boolean
+    + BaseProp(int locationX, int locationY, int speedX, int speedY)
+    + forward():void
+    + {abstract} Effect():void
+}
+
+
+class AddHpProp{
+    + AddHpProp(int locationX, int locationY, int speedX, int speedY)
+    + Effect():void
+}
+
+class BombProp{
+    - observers:List<BombObserver>
+    + BombObserver(int locationX, int locationY, int speedX, int speedY):void
+    + addObserver(BombObserver observer):void
+    + notifyObservers():int
+    + Effect():void
+}
+
+class FireProp{
+    + FireProp(int locationX, int locationY, int speedX, int speedY)
+    + Effect():void
+}
+class FirePlusProp{
+    + FirePlusProp(int locationX, int locationY, int speedX, int speedY)
+    + Effect():void
+}
+
+class ShieldProp{
+    + ShieldProp(int locationX, int locationY, int speedX, int speedY)
+    + Effect():void
+}
+
+BaseProp <|-- AddHpProp
+BaseProp <|-- BombProp
+BaseProp <|-- FireProp
+BaseProp <|-- FirePlusProp
+BaseProp <|-- ShieldProp
+
+abstract class AbstractAircraft
+{
+	# maxHp:int
+    # hp:int
+    # direction:int
+    # trajectory:Trajectory
+    # shootNum:int
+    # power:int
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + decreaseHp(int decrease):void
+    + getHp():int
+    + getDirection():int
+    + getShootNum():int
+    + getPower():int
+    + setTrajectory(Trajectory trajectory):void
+    + setShootNum(int shootNum):void
+    + setPower(int power):void
+    + getBullets(AbstractAircraft abstractAircraft, Class<? extends BaseBullet> bulletClass):List<BaseBullet>
+    + {abstract} shoot():List<BaseBullet>
+ }
+
+
+class HeroAircraft {
+    - shield:boolean
+    - {static} heroAircraft:HeroAircraft
+    + {static} getHeroAircraft():HeroAircraft
+    + HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + getShield():boolean
+    + setShield(boolean shield):void
+    + forward():void
+    + increaseHp(int increase):void
+    + decreaseHp(int decrease):void
+    + shoot():List<BaseBullet>
+}
+AbstractAircraft <|-- HeroAircraft
+
+class EnemyAircraft{
+    + EnemyAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + {abstract} getScore():int
+    + {abstract} dropProp():List<BaseProp>
+
+}
+AbstractAircraft <|-- EnemyAircraft
+
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + getScore():int
+    + dropProp():List<BaseProp>
+    + shoot():List<BaseBullet>
+    + update():int
+}
+EnemyAircraft <|-- MobEnemy
+
+class EliteEnemy {
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + getScore():int
+    + dropProp():List<BaseProp>
+    + shoot():List<BaseBullet>
+    + update():int
+}
+EnemyAircraft <|-- EliteEnemy
+
+class ElitePlusEnemy {
+    + ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + getScore():int
+    + dropProp():List<BaseProp>
+    + shoot():List<BaseBullet>
+    + update():int
+}
+EnemyAircraft <|-- ElitePlusEnemy
+
+class BossEnemy {
+    - bgmBoss:MusicThread
+    - executorService:ScheduledExecutorService
+    + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + setVoice(boolean voiceSwitch):void
+    + getScore():int
+    + dropProp():List<BaseProp>
+    + shoot():List<BaseBullet>
+    + update():int
+}
+EnemyAircraft <|-- BossEnemy
+class ShootBossEnemy {
+    + ShootBossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+}
+ShootBossEnemy --|> BossEnemy
+class DefendBossEnemy {
+    + DefendBossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + generateObstacle():Obstacle
+}
+DefendBossEnemy --|> BossEnemy
+abstract class BaseBullet
+{
+    # bulletPower:int
+    # speed:int
+    # angle:double
+    + BaseBullet(int locationX, int locationY, int speedX, int speedY, int bulletPower)
+    + BaseBullet(int locationX, int locationY, int speedX, int speedY, int bulletPower, int speed, double angle)
+    + forward():void
+	+ getBulletPower():int
+}
+
+class HeroBullet {
+    + HeroBullet(int locationX, int locationY, int speedX, int speedY, int bulletPower)
+    + HeroBullet(int locationX, int locationY, int speedX, int speedY, int bulletPower, int speed, double angle)
+}
+
+class EnemyBullet {
+    + EnemyBullet(int locationX, int locationY, int speedX, int speedY, int bulletPower)
+    + EnemyBullet(int locationX, int locationY, int speedX, int speedY, int bulletPower, int speed, double angle)
+    + update():int
+}
+
+class BossBullet {
+    + BossBullet(int locationX, int locationY, int speedX, int speedY, int bulletPower)
+    + BossBullet(int locationX, int locationY, int speedX, int speedY, int bulletPower, int speed, double angle)
+    + update():int
+}
+
+BaseBullet <|-- HeroBullet
+BaseBullet <|-- EnemyBullet
+BaseBullet <|-- BossBullet
+
+
+
+AbstractFlyingObject <|-- AbstractAircraft
+AbstractFlyingObject <|-- BaseBullet
+AbstractFlyingObject <|-- BaseProp
+@enduml

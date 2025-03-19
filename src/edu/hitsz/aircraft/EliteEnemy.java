@@ -1,7 +1,7 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.bullet.EliteBullet;
+import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.prop.*;
 import edu.hitsz.propfactory.*;
 import edu.hitsz.trajectory.Linear;
@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class EliteEnemy extends EnemyAircraft {
+public class EliteEnemy extends EnemyAircraft{
 
 
 
@@ -41,27 +41,36 @@ public class EliteEnemy extends EnemyAircraft {
 
         PropFactory propFactory;
 
-        if(i%9==0){
+        if(i%11==0){
             propFactory = new AddHpPropFactory();
             res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
         }
-        else if(i%9==1){
+        else if(i%11==1){
             propFactory = new BombPropFactory();
             res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
         }
-        else if(i%9==2) {
+        else if(i%11==2) {
             propFactory = new FirePropFactory();
             res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
         }
-        else if(i%9==3) {
+        else if(i%11==3) {
             propFactory = new FirePlusPropFactory();
+            res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
+        }
+        else if(i%11==4) {
+            propFactory = new ShieldPropFactory();
             res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
         }
         return res;
     }
     @Override
     public List<BaseBullet> shoot() {
-        return this.getBullets(this, EliteBullet.class);
+        return this.getBullets(this, EnemyBullet.class);
     }
 
+    @Override
+    public int update() {
+        vanish();
+        return getSCORE();
+    }
 }

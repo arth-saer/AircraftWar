@@ -3,10 +3,7 @@ package edu.hitsz.trajectory;
 import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.aircraft.EnemyAircraft;
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.bullet.ElitePlusBullet;
-
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 

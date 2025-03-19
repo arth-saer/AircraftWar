@@ -1,0 +1,45 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface BombObserver{
+    + {abstract} update():int
+}
+abstract class EnemyAircraft{
+    + {abstract} update():int
+}
+EnemyAircraft ..|> BombObserver
+class MobEnemy{
+    + update():int
+}
+MobEnemy --|> EnemyAircraft
+class EliteEnemy{
+    + update():int
+}
+EliteEnemy --|> EnemyAircraft
+class ElitePlusEnemy{
+    + update():int
+}
+ElitePlusEnemy --|> EnemyAircraft
+class BossEnemy{
+    + update():int
+}
+BossEnemy --|> EnemyAircraft
+
+class EnemyBullet{
+    + update():int
+}
+EnemyBullet ..|> BombObserver
+
+class BossBullet{
+    + update():int
+}
+BossBullet ..|> BombObserver
+
+class BombProp{
+    - observers:List<BombObserver>
+    + BombObserver(int locationX, int locationY, int speedX, int speedY):void
+    + addObserver(BombObserver observer):void
+    + notifyObservers():int
+}
+BombProp o--> BombObserver
+@enduml

@@ -3,9 +3,6 @@ package edu.hitsz.trajectory;
 import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.aircraft.EnemyAircraft;
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.bullet.HeroBullet1;
-import edu.hitsz.bullet.HeroBullet2;
-import edu.hitsz.bullet.HeroBullet3;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

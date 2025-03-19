@@ -3,7 +3,8 @@ package edu.hitsz.dao;
 import java.util.List;
 
 public interface ScoreDao {
-    void getScoresFromFile();
+    List<ScoreData> getScores(int difficulty);
+    void getAllScores();
 
 
     void  printScoreDatas();

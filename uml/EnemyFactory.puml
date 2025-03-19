@@ -3,44 +3,93 @@
 
 class EnemyAircraft{
     + EnemyAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + {abstract} getScore():int
+    + {abstract} dropProp():List<BaseProp>
+
 }
 
 class MobEnemy {
     + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
-    + forward():void
+    + getScore():int
+    + dropProp():List<BaseProp>
     + shoot():List<BaseBullet>
+    + update():int
 }
-EnemyAircraft <|-- MobEnemy
+EnemyAircraft <|-down- MobEnemy
 
 class EliteEnemy {
-    - shootNum:int
-    - power:int
-    - direction:int
     + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
-    + forward():void
-    + shoot():List<BaseBullet>
+    + getScore():int
     + dropProp():List<BaseProp>
+    + shoot():List<BaseBullet>
+    + update():int
 }
-EnemyAircraft <|-- EliteEnemy
+EnemyAircraft <|-down- EliteEnemy
+
+class ElitePlusEnemy {
+    + ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + getScore():int
+    + dropProp():List<BaseProp>
+    + shoot():List<BaseBullet>
+    + update():int
+}
+EnemyAircraft <|-up- ElitePlusEnemy
+
+class BossEnemy {
+    - bgmBoss:MusicThread
+    - executorService:ScheduledExecutorService
+    + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + setVoice(boolean voiceSwitch):void
+    + getScore():int
+    + dropProp():List<BaseProp>
+    + shoot():List<BaseBullet>
+    + update():int
+}
+EnemyAircraft <|-left- BossEnemy
+class ShootBossEnemy {
+    + ShootBossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+}
+ShootBossEnemy -up-|> BossEnemy
+class DefendBossEnemy {
+    + DefendBossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + generateObstacle():Obstacle
+}
+DefendBossEnemy --|> BossEnemy
 
 interface EnemyFactory
 {
-    + {abstract} createEnemy():EnemyAircraft
+    + {abstract} createEnemy(int speedX, int speedY, int hp):EnemyAircraft
 }
 
 class MobEnemyFactory
 {
-    + createEnemy():EnemyAircraft
+    + createEnemy(int speedX, int speedY, int hp):EnemyAircraft
 }
-EnemyFactory <|.. EliteEnemyFactory
-EnemyFactory <|.. MobEnemyFactory
-
 class EliteEnemyFactory
 {
-    + createEnemy():EnemyAircraft
+    + createEnemy(int speedX, int speedY, int hp):EnemyAircraft
 }
+class ElitePlusEnemyFactory
+{
+    + createEnemy(int speedX, int speedY, int hp):EnemyAircraft
+}
+class ShootBossEnemyFactory
+ {
+     + createEnemy(int speedX, int speedY, int hp):EnemyAircraft
+ }
+ class DefendBossEnemyFactory
+ {
+     + createEnemy(int speedX, int speedY, int hp):EnemyAircraft
+ }
+EnemyFactory <|.down. EliteEnemyFactory
+EnemyFactory <|.down. MobEnemyFactory
+EnemyFactory <|.right. ShootBossEnemyFactory
+EnemyFactory <|.up. DefendBossEnemyFactory
+EnemyFactory <|.up. ElitePlusEnemyFactory
 
-EnemyFactory ..> EnemyAircraft
+
+EnemyFactory .left.> EnemyAircraft
 'MobEnemyFactory ..> MobEnemy
 'EliteEnemyFactory ..> EliteEnemy
 

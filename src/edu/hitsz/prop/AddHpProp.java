@@ -1,14 +1,20 @@
 package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.application.MusicThread;
 
 public class AddHpProp extends BaseProp{
-    private int increase = 300;
     public AddHpProp(int locationX, int locationY, int speedX, int speedY){
         super(locationX, locationY, speedX, speedY);
     }
     @Override
-    public void Effect(HeroAircraft heroAircraft){
+    public int Effect(){
+        if(voiceSwitch){
+            new MusicThread("src/videos/get_supply.wav").start();
+        }
+        HeroAircraft heroAircraft = HeroAircraft.getHeroAircraft();
+        int increase = 1000;
         heroAircraft.increaseHp(increase);
+        return 0;
     }
 }

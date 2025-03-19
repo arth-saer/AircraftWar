@@ -21,6 +21,7 @@ public class HeroAircraft extends AbstractAircraft {
      * @param speedY 英雄机射出的子弹的基准速度（英雄机无特定速度）
      * @param hp    初始生命值
      */
+    private volatile boolean shield = false;
     private HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
         this.direction = -1;
@@ -32,7 +33,7 @@ public class HeroAircraft extends AbstractAircraft {
     private static HeroAircraft heroAircraft = new HeroAircraft(
             Main.WINDOW_WIDTH / 2,
             Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight() ,
-            0, 0, 50000000
+            0, 0, 25000
             );
     public static HeroAircraft getHeroAircraft(){
         return heroAircraft;
@@ -47,7 +48,23 @@ public class HeroAircraft extends AbstractAircraft {
         // 英雄机由鼠标控制，不通过forward函数移动
     }
 
+    public boolean getShield() {
+        return shield;
+    }
+    public void setShield(boolean shield) {
+        this.shield = shield;
+    }
 
+    @Override
+    public void decreaseHp(int decrease){
+        if(!this.shield){
+            hp -= decrease;
+            if(hp <= 0){
+                hp=0;
+                vanish();
+            }
+        }
+    }
     @Override
     /**
      * 通过射击产生子弹
@@ -55,7 +72,7 @@ public class HeroAircraft extends AbstractAircraft {
      */
     public List<BaseBullet> shoot(){
 
-        return this.getBullets(HeroAircraft.getHeroAircraft(), HeroBullet1.class);
+        return this.getBullets(HeroAircraft.getHeroAircraft(), HeroBullet.class);
 
     }
 

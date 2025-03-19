@@ -1,7 +1,7 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.bullet.EliteBullet;
+import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.prop.*;
 import edu.hitsz.propfactory.*;
 import edu.hitsz.trajectory.FanShape;
@@ -37,26 +37,39 @@ public class ElitePlusEnemy extends EnemyAircraft{
 
         PropFactory propFactory;
 
-        if(i%8==0){
+        if(i%10==0){
             propFactory = new AddHpPropFactory();
             res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
         }
-        else if(i%8==1){
+        else if(i%10==1){
             propFactory = new BombPropFactory();
             res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
         }
-        else if(i%8==2) {
+        else if(i%10==2) {
             propFactory = new FirePropFactory();
             res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
         }
-        else if(i%8==3) {
+        else if(i%10==3) {
             propFactory = new FirePlusPropFactory();
+            res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
+        }
+        else if(i%10==4) {
+            propFactory = new ShieldPropFactory();
             res.add(propFactory.createProp(this.getLocationX(),this.getLocationY(),0,3));
         }
         return res;
     }
     @Override
     public List<BaseBullet> shoot() {
-        return this.getBullets(this, EliteBullet.class);
+        return this.getBullets(this, EnemyBullet.class);
+    }
+
+    @Override
+    public int update() {
+        decreaseHp(100);
+        if(notValid()){
+            return getSCORE();
+        }
+        return 0;
     }
 }

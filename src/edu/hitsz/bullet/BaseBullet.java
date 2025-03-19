@@ -11,18 +11,18 @@ import edu.hitsz.basic.AbstractFlyingObject;
  */
 public class BaseBullet extends AbstractFlyingObject {
 
-    private int power = 10;
-    private int speed;
-    private double angle;
+    protected int bulletPower;
+    protected int speed;
+    protected double angle;
 
-    public BaseBullet(int locationX, int locationY, int speedX, int speedY, int power) {
+    public BaseBullet(int locationX, int locationY, int speedX, int speedY, int bulletPower) {
         super(locationX, locationY, speedX, speedY);
-        this.power = power;
+        this.bulletPower = bulletPower;
     }
 
-    public BaseBullet(int locationX, int locationY, int speedX, int speedY, int power, int speed, double angle) {
+    public BaseBullet(int locationX, int locationY, int speedX, int speedY, int bulletPower, int speed, double angle) {
         super(locationX, locationY, speedX, speedY);
-        this.power = power;
+        this.bulletPower = bulletPower;
         this.speed = speed;
         this.angle = angle;
     }
@@ -54,7 +54,7 @@ public class BaseBullet extends AbstractFlyingObject {
         }
     }
 
-    public int getPower() {
-        return power;
+    public int getBulletPower() {
+        return bulletPower;
     }
 }

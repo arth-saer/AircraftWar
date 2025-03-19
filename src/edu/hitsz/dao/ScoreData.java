@@ -4,14 +4,21 @@ import java.io.Serializable;
 
 public class ScoreData implements Serializable {
 
+    private int difficulty;
+
     private int score;
     private String name;
     private String date;
 
-    public ScoreData(int score, String name, String date){
+    public ScoreData(int difficult, int score, String name, String date){
+        this.difficulty = difficult;
         this.score = score;
         this.name = name;
         this.date = date;
+    }
+
+    public void setDifficult(int difficult) {
+        this.difficulty = difficult;
     }
 
     public void setScore(int score) {
@@ -24,6 +31,10 @@ public class ScoreData implements Serializable {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public int getDifficult() {
+        return difficulty;
     }
 
     public int getScore() {

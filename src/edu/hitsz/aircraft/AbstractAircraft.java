@@ -14,9 +14,7 @@ import java.util.List;
  * @author hitsz
  */
 public abstract class AbstractAircraft extends AbstractFlyingObject {
-    /**
-     * 生命值
-     */
+
     protected int maxHp;
     protected int hp;
     protected int direction;
@@ -32,9 +30,7 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
     }
 
 
-    public int getDirection(){
-        return direction;
-    }
+
 
     public void decreaseHp(int decrease){
         hp -= decrease;
@@ -55,14 +51,10 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
     public int getHp() {
         return hp;
     }
+    public int getDirection(){
+        return direction;
+    }
 
-
-    /**
-     * 飞机射击方法，可射击对象必须实现
-     * @return
-     *  可射击对象需实现，返回子弹
-     *  非可射击对象空实现，返回null
-     */
     public int getShootNum(){
         return shootNum;
     }

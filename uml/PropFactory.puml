@@ -2,54 +2,79 @@
 'https://plantuml.com/class-diagram
 
 abstract class BaseProp{
+    + {static} voiceSwitch:boolean
     + BaseProp(int locationX, int locationY, int speedX, int speedY)
-    + {abstract} Effect(HeroAircraft heroAircraft):void
+    + forward():void
+    + {abstract} Effect():void
 }
 
 
 class AddHpProp{
-    - increase:int
     + AddHpProp(int locationX, int locationY, int speedX, int speedY)
-    + Effect(HeroAircraft heroAircraft):void
+    + Effect():void
 }
 
 class BombProp{
-    + BombProp(int locationX, int locationY, int speedX, int speedY)
-    + Effect(HeroAircraft heroAircraft):void
+    - observers:List<BombObserver>
+    + BombObserver(int locationX, int locationY, int speedX, int speedY):void
+    + addObserver(BombObserver observer):void
+    + notifyObservers():int
+    + Effect():void
 }
 
 class FireProp{
     + FireProp(int locationX, int locationY, int speedX, int speedY)
-    + Effect(HeroAircraft heroAircraft):void
+    + Effect():void
+}
+class FirePlusProp{
+    + FirePlusProp(int locationX, int locationY, int speedX, int speedY)
+    + Effect():void
 }
 
-BaseProp <|-- AddHpProp
-BaseProp <|-- BombProp
-BaseProp <|-- FireProp
+class ShieldProp{
+    + ShieldProp(int locationX, int locationY, int speedX, int speedY)
+    + Effect():void
+}
+
+BaseProp <|-up- AddHpProp
+BaseProp <|-down- BombProp
+BaseProp <|-up- FireProp
+BaseProp <|-down- FirePlusProp
+BaseProp <|-left- ShieldProp
 
 interface PropFactory
 {
-    + {abstract} createProp():BaseProp
+    + {abstract} createProp(int locationX, int locationY, int speedX, int speedY):BaseProp
 }
 
 class AddHpPropFactory
 {
-    + createProp():BaseProp
+    + createProp(int locationX, int locationY, int speedX, int speedY):BaseProp
 }
 class BombPropFactory
 {
-    + createProp():BaseProp
+    + createProp(int locationX, int locationY, int speedX, int speedY):BaseProp
 }
 class FirePropFactory
 {
-    + createProp():BaseProp
+    + createProp(int locationX, int locationY, int speedX, int speedY):BaseProp
+}
+class FirePlusPropFactory
+{
+    + createProp(int locationX, int locationY, int speedX, int speedY):BaseProp
+}
+class ShieldPropFactory
+{
+    + createProp(int locationX, int locationY, int speedX, int speedY):BaseProp
 }
 
-PropFactory <|.. AddHpPropFactory
-PropFactory <|.. BombPropFactory
-PropFactory <|.. FirePropFactory
+PropFactory <|.up. AddHpPropFactory
+PropFactory <|.down. BombPropFactory
+PropFactory <|.up. FirePropFactory
+PropFactory <|.down. FirePlusPropFactory
+PropFactory <|.right. ShieldPropFactory
 
-PropFactory ..> BaseProp
+PropFactory .left.> BaseProp
 
 'AddHpPropFactory ..> AddHpProp
 'BombPropFactory ..> BombProp

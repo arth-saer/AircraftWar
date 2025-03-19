@@ -1,0 +1,44 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class Game{
+    + action():void
+    # timeCountAndNewCycleJudgeForEnemy():boolean
+    # timeCountAndNewCycleJudgeForHero():boolean
+    # timeCountAndNewCycleJudgeForEnemyObstacle():boolean
+    # generateEnemy():void
+    # {abstract} generateBoss():void
+    # enemyShootAction():void
+    # heroShootAction():void
+    # enemyObstacleAction():void
+    # bulletsMoveAction():void
+    # aircraftsMoveAction():void
+    # propMoveAction():void
+    # obstacleMoveAction():void
+    # specialEffectMoveAction():void
+    # crashCheckAction():void
+    # postProcessAction();
+    # repaint();
+    # checkGameOver();
+    # {abstract} changeDifficultyByCycleAndMaxNum();
+    # {abstract} changeDifficultyByEnemyField();
+}
+class EasyGame{
+    + generateBoss():void
+    + changeDifficultyByCycleAndMaxNum();
+    + changeDifficultyByEnemyField();
+}
+EasyGame --|> Game
+class RegularGame{
+    + generateBoss():void
+    + changeDifficultyByCycleAndMaxNum();
+    + changeDifficultyByEnemyField();
+}
+RegularGame --|> Game
+class HardGame{
+    + generateBoss():void
+    + changeDifficultyByCycleAndMaxNum();
+    + changeDifficultyByEnemyField();
+}
+HardGame --|> Game
+@enduml

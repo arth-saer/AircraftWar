@@ -2,10 +2,11 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.application.Main;
 import edu.hitsz.prop.BaseProp;
+import edu.hitsz.prop.BombObserver;
 
 import java.util.List;
 
-public abstract class EnemyAircraft extends AbstractAircraft{
+public abstract class EnemyAircraft extends AbstractAircraft implements BombObserver {
 
 
 

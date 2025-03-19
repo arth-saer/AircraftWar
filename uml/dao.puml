@@ -2,20 +2,22 @@
 'https://plantuml.com/class-diagram
 
 interface ScoreDao{
-    + getScoresFromFile():void
+    + getScores(int difficulty):List<ScoreData>
+    + getAllScores():void
     + printScoreDatas():void
     + sortByScore():void
     + doAdd(ScoreData scoredata):void
     + doDelete((ScoreData scoredata):void
 
 }
-class  ScoreDaoImp{
+class  ScoreDaoImpByFile{
 
     - fileName:String
-    - scoreDatas:List<ScoreData>
-    + ScoreDaoImp(String fileName)
+    - allScoreDatas:List<ScoreData>
 
-    + getScoresFromFile():void
+    + ScoreDaoImpByFile(String fileName)
+    + getScores(int difficulty):List<ScoreData>
+    + getAllScores():void
     + printScoreDatas():void
     + sortByScore():void
     + doAdd(ScoreData scoredata):void
@@ -23,21 +25,24 @@ class  ScoreDaoImp{
 
 }
 class ScoreData{
+    - difficulty:int
     - name:String
     - score:int
     - date:String
-    + ScoreData(String name, int score, String date)
+    + ScoreData(int difficult, int score, String name, String date)
+    + setDifficulty(int difficulty):void
     + setName(String name):void
     + setScore(int score):void
     + setDate(String date):void
+    + getDifficulty():int
     + getName():String
     + getScore():int
     + getDate():String
 
 }
 
-ScoreDaoImp ..|> ScoreDao
+ScoreDaoImpByFile ..|> ScoreDao
 
-ScoreDaoImp --> ScoreData
+ScoreDaoImpByFile --> ScoreData
 
 @enduml

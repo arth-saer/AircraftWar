@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="edu.hitsz.application.StartMenu">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="9" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="94" y="132" width="314" height="318"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="33242" class="javax.swing.JButton" binding="easy">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="200" height="100"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-8928267"/>
+          <foreground color="-3266517"/>
+          <text value="简单模式"/>
+        </properties>
+      </component>
+      <component id="de26f" class="javax.swing.JButton" binding="regular">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="200" height="100"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-5242958"/>
+          <foreground color="-15004210"/>
+          <text value="普通模式"/>
+        </properties>
+      </component>
+      <component id="12292" class="javax.swing.JButton" binding="hard">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="200" height="100"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-10251"/>
+          <foreground color="-14234094"/>
+          <text value="困难模式"/>
+        </properties>
+      </component>
+      <component id="1ee3f" class="javax.swing.JComboBox" binding="voiceSwitch">
+        <constraints>
+          <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="150" height="40"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <hspacer id="63f3c">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <hspacer id="4a90a">
+        <constraints>
+          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <vspacer id="269fc">
+        <constraints>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <vspacer id="d30c4">
+        <constraints>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <vspacer id="7de96">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <vspacer id="5567">
+        <constraints>
+          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <vspacer id="45bc6">
+        <constraints>
+          <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+            <minimum-size width="100" height="50"/>
+          </grid>
+        </constraints>
+      </vspacer>
+      <component id="684de" class="javax.swing.JLabel" binding="voiceSwitchLabel">
+        <constraints>
+          <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <minimum-size width="20" height="40"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Arial Black" size="14" style="3"/>
+          <foreground color="-16777216"/>
+          <text value="音效"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

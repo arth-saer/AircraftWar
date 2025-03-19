@@ -4,6 +4,7 @@ import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.prop.BaseProp;
+import edu.hitsz.prop.BombObserver;
 import edu.hitsz.trajectory.NoShoot;
 
 import java.util.LinkedList;
@@ -15,7 +16,7 @@ import java.util.List;
  *
  * @author hitsz
  */
-public class MobEnemy extends EnemyAircraft {
+public class MobEnemy extends EnemyAircraft{
 
 
     public MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
@@ -36,6 +37,10 @@ public class MobEnemy extends EnemyAircraft {
     @Override
     public List<BaseBullet> shoot() {
         return this.getBullets(this, EnemyBullet.class);
+    }
+    public int update(){
+        vanish();
+        return getSCORE();
     }
 
 }
